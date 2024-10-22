@@ -1,7 +1,7 @@
 #pragma once
 #include "RichModel.h"
 #include <fstream>
-#include <Eigen\dense>
+#include <Eigen/Dense>
 using namespace std;
 struct FacePoint
 {

@@ -1,6 +1,6 @@
 #pragma once
-#include "..\\Model3D\\EdgePoint.h"
-#include "..\\Model3D\\RichModel.h"
+#include "../Model3D/EdgePoint.h"
+#include "../Model3D/RichModel.h"
 
 //#if defined(_DEBUG) && defined(_WIN64)
 //#pragma comment(lib, "..\\x64\\Debug\\Model3D.lib")
@@ -43,10 +43,10 @@ namespace Geodesic
 		vector<EdgePoint> BacktraceIsoline(double val) const;
 		virtual int GetAncestor(int vIndex) const = 0;
 		double GetMaxDistance() const;
-		virtual  __int64 GetMaxLenOfQueue() const { return m_maxLenOfQueue; }
-		virtual  __int64 GetMaxPropagationLevels()const { return m_depthOfResultingTree; }
+		virtual  long long GetMaxLenOfQueue() const { return m_maxLenOfQueue; }
+		virtual  long long GetMaxPropagationLevels()const { return m_depthOfResultingTree; }
 		string GetAlgorithmName() const;
-		__int64 GetRunTime() const { return m_nTotalMilliSeconds; }
+		long long GetRunTime() const { return m_nTotalMilliSeconds; }
 		double GetMemoryCost() const { return m_memory; }
 		virtual void OutputExperimentalResults() const;
 		const vector<double>& GetDistanceField() const;

@@ -1,5 +1,6 @@
 #pragma once
 #include "DistanceApproach.h"
+#include <cfloat>
 namespace Geodesic
 {
 	using namespace Model3D;

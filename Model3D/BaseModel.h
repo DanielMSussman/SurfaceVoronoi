@@ -9,7 +9,7 @@
 #include <map>
 #include <set>
 #include <tuple>
-#include <Eigen/dense>
+#include <Eigen/Dense>
 using namespace std;
 namespace Model3D
 {
@@ -43,7 +43,7 @@ namespace Model3D
 			string Encode2String() const
 			{
 				char buf[1024];
-				sprintf_s(buf, "%0d%0d%0d", verts[0], verts[1], verts[2]);
+				sprintf(buf, "%0d%0d%0d", verts[0], verts[1], verts[2]);
 				return string(buf);
 			}
 			bool operator<(const CFace& other) const

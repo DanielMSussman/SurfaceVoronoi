@@ -1,5 +1,6 @@
 #pragma once
 #include "DistanceApproach.h"
+#include <cfloat>
 using namespace std;
 namespace Geodesic
 {

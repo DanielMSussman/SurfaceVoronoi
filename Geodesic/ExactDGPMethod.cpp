@@ -2,11 +2,11 @@
 //
 //////////////////////////////////////////////////////////////////////
 #include "ExactDGPMethod.h"
-#include <windows.h>
+/*#include <windows.h>*/
 #include <fstream>
 #include <iterator>
 #include <cassert>
-#include "..\\Model3D\\Parameters.h"
+#include "../Model3D/Parameters.h"
 using namespace std;
 
 namespace Geodesic
@@ -99,7 +99,7 @@ namespace Geodesic
 				}
 				else if (proportion >= 0 && proportion <= 1)
 				{
-					proportion = max(proportion, 0);
+					proportion = max(proportion, 0.);
 					coord = model.GetNew2DCoordinatesByRotatingAroundLeftChildEdge(edgeIndex, coord);
 					edgeIndex = model.Edge(edgeIndex).indexOfLeftEdge;
 					//rightLen = disToAngle;				
@@ -107,8 +107,8 @@ namespace Geodesic
 				else
 				{
 					proportion = model.ProportionOnRightEdgeByImage(edgeIndex, coord, oldProprotion);
-					proportion = max(proportion, 0);
-					proportion = min(proportion, 1);
+					proportion = max(proportion, 0.);
+					proportion = min(proportion, 1.);
 					coord = model.GetNew2DCoordinatesByRotatingAroundRightChildEdge(edgeIndex, coord);
 					edgeIndex = model.Edge(edgeIndex).indexOfRightEdge;
 				}
@@ -126,7 +126,7 @@ namespace Geodesic
 
 	void CExactDGPMethod::CollectExperimentalResults()
 	{
-		m_memory = ((double)model.GetNumOfVerts() * sizeof InfoAtVertex) / 1024 / 1024;
+		m_memory = ((double)model.GetNumOfVerts() * sizeof( InfoAtVertex)) / 1024 / 1024;
 		for (int i = 0; i < m_scalarField.size(); ++i)
 		{
 			m_scalarField[i] = m_InfoAtVertices[i].disUptodate;

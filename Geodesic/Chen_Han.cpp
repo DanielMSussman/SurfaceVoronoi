@@ -82,8 +82,8 @@ namespace Geodesic
 
 	void CChen_Han::CollectExperimentalResults()
 	{
-		m_memory = ((double)model.GetNumOfVerts() * sizeof InfoAtVertex
-			+ (double)model.GetNumOfEdges() * sizeof Window
+		m_memory = ((double)model.GetNumOfVerts() * sizeof (InfoAtVertex)
+			+ (double)model.GetNumOfEdges() * sizeof(Window)
 			+ (double)m_maxLenOfQueue * sizeof(Window *)) / 1024 / 1024;
 		for (int i = 0; i < m_scalarField.size(); ++i)
 		{

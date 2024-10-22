@@ -1,6 +1,3 @@
-#pragma comment(lib, "libmpfr-4.lib")
-#pragma comment(lib, "libgmp-10.lib")
-
 #include "RichModel.h"
 #include <iostream>
 #include "CDT.h"

@@ -3,8 +3,8 @@
 //////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "..\\Model3D\EdgePoint.h"
-#include "..\\Model3D\RichModel.h"
+#include "../Model3D/EdgePoint.h"
+#include "../Model3D/RichModel.h"
 
 #include <list>
 #include <float.h>

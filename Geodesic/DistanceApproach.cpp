@@ -1,5 +1,7 @@
 #include "DistanceApproach.h"
-#include <Windows.h>
+/*#include <Windows.h>*/
+#include <chrono>
+#include <cfloat>
 #include <iostream>
 using namespace std;
 namespace Geodesic
@@ -143,9 +145,10 @@ namespace Geodesic
 	void CDistanceApproach::Execute()
 	{
 		Initialize();
-		m_nTotalMilliSeconds = GetTickCount();
+        auto startTime = std::chrono::high_resolution_clock::now();
 		Propagate();
-		m_nTotalMilliSeconds = GetTickCount() - m_nTotalMilliSeconds;
+        auto endTime = std::chrono::high_resolution_clock::now();
+        m_nTotalMilliSeconds = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
 		CollectExperimentalResults();
 		Dispose();
 	}

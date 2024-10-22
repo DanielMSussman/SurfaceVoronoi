@@ -46,7 +46,7 @@ namespace Geodesic
 
 	void CDijkstra::CollectExperimentalResults()
 	{
-		m_memory = ((double)model.GetNumOfVerts() * sizeof InfoAtVertex
+		m_memory = ((double)model.GetNumOfVerts() * sizeof (InfoAtVertex)
 			+ (double)m_maxLenOfQueue * sizeof(InfoAtVertex*)) / 1024 / 1024;
 		for (int i = 0; i < m_finalResults.size(); ++i)
 		{

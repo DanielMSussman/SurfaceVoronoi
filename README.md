@@ -1,3 +1,14 @@
+This repo is a fork of [SurfaceVoronoi](https://github.com/sssomeone/SurfaceVoronoi). The main modifications are simply to make it compatible with a linux development environment.
+Changes include;
+
+* A cmake-style build (cd build && cmake .. && make)
+* removing dependence on "Windows.h" header (and replacing all "GetTick" timing calls with a dependence on #include <chrono> instead)
+
+This was tested on Ubuntu 24.04. You'll need  to apt-get install libgmp, libmpfr, and libeigen-dev, and cmake install the CGAL headers.
+
+The original readme is reproduced below:
+
+
 # SurfaceVoronoi
 Code of SIGGRAPH Asia 2022 Paper SurfaceVoronoi: Efficiently Computing Voronoi Diagrams over Mesh Surfaces with Arbitrary Distance Solvers.
 

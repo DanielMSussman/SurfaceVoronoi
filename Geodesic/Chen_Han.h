@@ -9,8 +9,8 @@
 #include <queue>
 #include <algorithm> 
 #include <iostream>
-#include "..\\Model3D\\Parameters.h"
-#include <Eigen\core>
+#include "../Model3D/Parameters.h"
+#include <Eigen/Core>
 using namespace std;
 namespace Geodesic
 {
@@ -71,9 +71,9 @@ namespace Geodesic
 		queue<QuoteWindow> m_QueueForWindows;
 		queue<QuoteInfoAtVertex> m_QueueForPseudoSources;
 		vector<InfoAtAngle> m_InfoAtAngles;
-		__int64 m_nMaxLenOfWindowQueue;
-		__int64 m_nMaxLenOfPseudoSourceQueue;
-		__int64 m_nCountOfWindows;
+		long long m_nMaxLenOfWindowQueue;
+		long long m_nMaxLenOfPseudoSourceQueue;
+		long long m_nCountOfWindows;
 	protected:
 		virtual void Initialize();
 		virtual void Dispose();
@@ -106,9 +106,9 @@ namespace Geodesic
 		CChen_Han(const CRichModel& model, const map<int, double>& sources, const set<int> &destinations);
 		CChen_Han(const CRichModel& model, const set<int>& sources);
 		CChen_Han(const CRichModel& model, const set<int>& sources, const set<int>& destinations);
-		__int64 GetTotalNumOfWindows() const { return m_nCountOfWindows; }
-		__int64 GetMaxLenOfWindowQueue() const { return m_nMaxLenOfWindowQueue; }
-		__int64 GetMaxLenOfPseudoSourceQueue() const { return m_nMaxLenOfPseudoSourceQueue; }
+		long long GetTotalNumOfWindows() const { return m_nCountOfWindows; }
+		long long GetMaxLenOfWindowQueue() const { return m_nMaxLenOfWindowQueue; }
+		long long GetMaxLenOfPseudoSourceQueue() const { return m_nMaxLenOfPseudoSourceQueue; }
 		void OutputExperimentalResults() const;
 	};
 }

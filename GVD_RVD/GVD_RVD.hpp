@@ -1,5 +1,6 @@
 #pragma once
-#include <Eigen\dense>
+#include <Eigen/Dense>
+#include <chrono>
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -12,7 +13,6 @@
 #include<math.h>
 #include <map>
 #include <algorithm>
-#include "windows.h"
 #include <CGAL/Surface_mesh.h>
 #include <CGAL/convex_hull_2.h>
 #include <CGAL/convex_hull_3.h>
@@ -37,23 +37,10 @@ typedef CGAL::Aff_transformation_3<inexact_Kernel> Aff_transformation_3;
 typedef Polyhedron::HalfedgeDS             HalfedgeDS;
 using namespace std;
 
-#include "..\\Geodesic\Xin_Wang.h"
-#if defined(_DEBUG) && defined(_WIN64)
-#pragma comment(lib, "..\\lib\\Debug\\Geodesic.lib")
-#endif
-#if !defined(_DEBUG) && defined(_WIN64)
-#pragma comment(lib, "..\\lib\\Release\\Geodesic.lib")
-#endif
+#include "../Geodesic/Xin_Wang.h"
 
-#include "..\\Model3D\RichModel.h"
-#if defined(_DEBUG) && defined(_WIN64)
-#pragma comment(lib, "..\\Debug\\lib\\Model3D.lib")
-#endif
-#if !defined(_DEBUG) && defined(_WIN64)
-#pragma comment(lib, "..\\Release\\lib\\Model3D.lib")
-#endif
+#include "../Model3D/RichModel.h"
 
-#include <Eigen/dense>
 #include <unordered_set>
 
 namespace GVD
@@ -233,7 +220,7 @@ namespace GVD
 
 	struct pair_hash
 	{
-		std::size_t operator () (const std::pair<int, int> const& pair) const
+		std::size_t operator () (const std::pair<int, int> & pair) const
 		{
 			std::size_t h1 = std::hash<int>()(pair.first);
 			std::size_t h2 = std::hash<int>()(pair.second);
@@ -305,7 +292,8 @@ namespace GVD
 
 
 		int threeNeighboringFaces[3];
-		double t = GetTickCount64();
+        auto startTime = std::chrono::high_resolution_clock::now();
+        
 		Model3D::CPoint3D sourcePos;
 
 
@@ -355,8 +343,9 @@ namespace GVD
 			}
 			pending.pop();
 		}
+        auto endTime = std::chrono::high_resolution_clock::now();
+        double t = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count() / 1.;
 
-		t = GetTickCount64() - t;
 		cerr << "while time: " << t / 1000.0 << "  seconds..." << endl;
 
 		return m_distances;
@@ -1210,15 +1199,16 @@ namespace GVD
 	{
 		vector<pair<Model3D::CPoint3D, Model3D::CPoint3D>> segs;
 
-		double t = GetTickCount64();
+        auto startTime = std::chrono::high_resolution_clock::now();
 		cout << "infer start" << endl;
 		cout << "before mpsize " << mpdis.size() << endl;
 		auto resultingField = InferOverPropagatedDistancesForFastMarching(model, sources, mpdis);
 		cout << "after mpsize " << mpdis.size() << endl;
-		t = GetTickCount64() - t;
+        auto endTime = std::chrono::high_resolution_clock::now();
+        double t = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count() / 1.;
 		cerr << "InferOverPropagatedDistancesForFastMarching time: " << t / 1000.0 << "  seconds..." << endl;
 
-		t = GetTickCount64();
+        startTime = std::chrono::high_resolution_clock::now();
 #pragma omp parallel for num_threads(4)
 		for (int faceID = 0; faceID < model.GetNumOfFaces(); ++faceID)
 		{
@@ -1241,7 +1231,8 @@ namespace GVD
 				copy(segs_face.begin(), segs_face.end(), back_inserter(segs));
 			}
 		}
-		t = GetTickCount64() - t;
+        endTime = std::chrono::high_resolution_clock::now();
+        t = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count() / 1.;
 		cerr << "Triangle_Base_Convex_Top for all the faces: " << t / 1000.0 << "  seconds..." << endl;
 		return segs;
 	}
@@ -1290,15 +1281,15 @@ namespace GVD
 	{
 		vector<pair<Model3D::CPoint3D, Model3D::CPoint3D>> segs;
 
-		double t = GetTickCount64();
+        auto startTime = std::chrono::high_resolution_clock::now();
 		cout << "infer start" << endl;
 		auto resultingField = InferOverPropagatedDistancesForLRVD(model, sources);
-		t = GetTickCount64() - t;
+        auto endTime = std::chrono::high_resolution_clock::now();
+        double t = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count() / 1.;
 		double infer = t / 1000.0;
 		cerr << "InferOverPropagatedDistancesForLRVD time: " << t / 1000.0 << "  seconds..." << endl;
 
-		t = GetTickCount64();
-
+        startTime = std::chrono::high_resolution_clock::now();
 
 #pragma omp parallel for num_threads(8)
 		for (int faceID = 0; faceID < model.GetNumOfFaces(); ++faceID)
@@ -1322,7 +1313,8 @@ namespace GVD
 				copy(segs_face.begin(), segs_face.end(), back_inserter(segs));
 			}
 		}
-		t = GetTickCount64() - t;
+        endTime = std::chrono::high_resolution_clock::now();
+        t = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count() / 1.;
 		double cutt = t/1000;
 		cerr << "Triangle_Base_Convex_Top for all the faces: " << t / 1000.0 << "  seconds..." << endl;
 		return { segs, { infer,cutt } };
@@ -1332,13 +1324,14 @@ namespace GVD
 	{
 		vector<pair<Model3D::CPoint3D, Model3D::CPoint3D>> segs;
 
-		double t = GetTickCount64();
+        auto startTime = std::chrono::high_resolution_clock::now();
 		cout << "infer start" << endl;
 		auto resultingField = InferOverPropagatedDistancesForLRVD(model, sources);
-		t = GetTickCount64() - t;
+        auto endTime = std::chrono::high_resolution_clock::now();
+        double t = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count() / 1.;
 		cerr << "InferOverPropagatedDistancesForLRVD time: " << t / 1000.0 << "  seconds..." << endl;
 
-		t = GetTickCount64();
+        startTime = std::chrono::high_resolution_clock::now();
 
 		vector<Model3D::CPoint3D> sources3d(sources.size());
 
@@ -1404,7 +1397,8 @@ namespace GVD
 				copy(segs_face.begin(), segs_face.end(), back_inserter(segs));
 			}
 		}
-		t = GetTickCount64() - t;
+        endTime = std::chrono::high_resolution_clock::now();
+        t = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count() / 1.;
 		cerr << "Triangle_Base_Convex_Top for all the faces: " << t / 1000.0 << "  seconds..." << endl;
 		return segs;
 	}
@@ -1479,12 +1473,13 @@ namespace GVD
 	vector<pair<Model3D::CPoint3D, Model3D::CPoint3D>> GetGVD_Bisectors(const Model3D::CRichModel& model, const set<int>& sources)
 	{
 		vector<pair<Model3D::CPoint3D, Model3D::CPoint3D>> segs;
-		double t = GetTickCount64();
+        auto startTime = std::chrono::high_resolution_clock::now();
 		auto resultingField = InferOverPropagatedDistancesForGVD(model, sources);
-		t = GetTickCount64() - t;
+        auto endTime = std::chrono::high_resolution_clock::now();
+        double t = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count() / 1.;
 		cerr << "InferOverPropagatedDistancesForGVD time: " << t / 1000.0 << "  seconds..." << endl;
 
-		t = GetTickCount64();
+        startTime = std::chrono::high_resolution_clock::now();
 		auto cmp = [](const tuple<int, double, double, double>& a, const tuple<int, double, double, double>& b) {
 			return max(get<1>(a), max(get<2>(a), get<3>(a))) < max(get<1>(b), max(get<2>(b), get<3>(b)));
 		};
@@ -1512,7 +1507,8 @@ namespace GVD
 				copy(segs_face.begin(), segs_face.end(), back_inserter(segs));
 			}
 		}
-		t = GetTickCount64() - t;
+        endTime = std::chrono::high_resolution_clock::now();
+        t = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count() / 1.;
 		cerr << "Triangle_Base_Convex_Top for all faces: " << t / 1000.0 << "  seconds..." << endl;
 		return segs;
 	}
@@ -1582,7 +1578,7 @@ namespace GVD
 
 
 		int threeNeighboringFaces[3];
-		double t = GetTickCount64();
+        auto startTime = std::chrono::high_resolution_clock::now();
 		for (int f = 0; f < model.GetNumOfFaces(); ++f)
 			for (int i = 0; i < sources.size(); ++i) {
 				evt.d1 = GetSourcesToPointDis(i, model.Vert(model.Face(f)[0]));
@@ -1642,7 +1638,8 @@ namespace GVD
 		//	pending.pop();
 		//}
 
-		t = GetTickCount64() - t;
+        auto endTime = std::chrono::high_resolution_clock::now();
+        double t = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count() / 1.;
 		cerr << "while time: " << t / 1000.0 << "  seconds..." << endl;
 
 		cout << m_distances.size() << endl;
@@ -1657,7 +1654,7 @@ namespace GVD
 	{
 		vector<pair<Model3D::CPoint3D, Model3D::CPoint3D>> segs;
 
-		double t = GetTickCount64();
+        auto startTime = std::chrono::high_resolution_clock::now();
 		cout << "infer start" << endl;
 
 
@@ -1675,10 +1672,11 @@ namespace GVD
 		}
 
 
-		t = GetTickCount64() - t;
+        auto endTime = std::chrono::high_resolution_clock::now();
+        double t = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count() / 1.;
 		cerr << "InferOverPropagatedDistancesForLRVD time: " << t / 1000.0 << "  seconds..." << endl;
 
-		t = GetTickCount64();
+        startTime = std::chrono::high_resolution_clock::now();
 
 #pragma omp parallel for num_threads(8)
 		for (int faceID = 0; faceID < model.GetNumOfFaces(); ++faceID)
@@ -1702,7 +1700,8 @@ namespace GVD
 				copy(segs_face.begin(), segs_face.end(), back_inserter(segs));
 			}
 		}
-		t = GetTickCount64() - t;
+        endTime = std::chrono::high_resolution_clock::now();
+        t = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count() / 1.;
 		cerr << "Triangle_Base_Convex_Top for all the faces: " << t / 1000.0 << "  seconds..." << endl;
 		return { segs,dis };
 	}

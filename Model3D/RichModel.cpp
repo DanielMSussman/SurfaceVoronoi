@@ -97,7 +97,9 @@ namespace Model3D
 				m_Edges[threeIndices[j]].indexOfRightEdge = Edge(threeIndices[(j + 1) % 3]).indexOfReverseEdge;
 			}
 		}
-		m_Edges.swap(vector<CEdge>(m_Edges));
+        vector<CEdge> tempVec(m_Edges);
+		/*m_Edges.swap(vector<CEdge>(m_Edges));*/
+        m_Edges.swap(tempVec);
 	}
 
 	void CRichModel::CollectAndArrangeNeighs()

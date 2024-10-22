@@ -1,6 +1,6 @@
 #pragma once
 #include "BaseModel.h"
-#include <CGAL\Polygon_2.h>
+#include <CGAL/Polygon_2.h>
 
 namespace Model3D
 {

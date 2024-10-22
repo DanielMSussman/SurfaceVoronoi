@@ -6,9 +6,9 @@
 #include <sstream>
 #include <algorithm>
 #include <iomanip>
-#include <Eigen\core>
-#include <Eigen\dense>
-#include <Eigen\LU>
+#include <Eigen/Core>
+#include <Eigen/Dense>
+#include <Eigen/LU>
 #include "CDT.h"
 using namespace std;
 

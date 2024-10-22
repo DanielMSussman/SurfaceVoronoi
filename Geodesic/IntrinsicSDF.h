@@ -1,5 +1,5 @@
 #pragma once
-#include "xin_wang.h"
+#include "Xin_Wang.h"
 namespace Geodesic
 {
 	using namespace Model3D;
@@ -61,8 +61,8 @@ namespace Geodesic
 		double m_wavefront;//done
 		double m_maxModuleOfSweptEdges;//done
 
-		__int64 m_numOfSweptVertices;//done
-		__int64 m_nTimesForComputingLoops;
+		long long m_numOfSweptVertices;//done
+		long long m_nTimesForComputingLoops;
 	protected:
 		bool ISDFisDetermined() const;//done
 		bool CannotDetermineShortestLoop(const BalancedWindow& w) const;
@@ -76,7 +76,7 @@ namespace Geodesic
 		virtual void FigureOutNewLoop(const BalancedWindow& w);//done
 		virtual void FigureOutNewLoop(int indexOfUpdatedVertex);//done
 	public:
-		__int64 m_nWindowsKeptOnEdges;//done
+		long long m_nWindowsKeptOnEdges;//done
 		WindowPair m_bestWindowPair;
 		bool IsLocatedOnCorner() const;
 		vector<WindowPair> m_candidateWindowPairs;

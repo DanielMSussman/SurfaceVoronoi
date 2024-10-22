@@ -7,7 +7,7 @@
 #include <cassert>
 #define _USE_MATH_DEFINES
 #include <math.h>
-#include <Eigen\core>
+#include <Eigen/Core>
 using namespace std;
 namespace Model3D
 {

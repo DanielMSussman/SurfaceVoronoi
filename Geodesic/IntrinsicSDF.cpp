@@ -181,8 +181,8 @@ namespace Geodesic
 		m_windowsOnEdges.clear();
 
 
-		m_memory = ((double)m_numOfSweptVertices * sizeof InfoAtVertex
-			+ (double)m_nWindowsKeptOnEdges * sizeof BalancedWindow
+		m_memory = ((double)m_numOfSweptVertices * sizeof( InfoAtVertex)
+			+ (double)m_nWindowsKeptOnEdges * sizeof (BalancedWindow)
 			+ (double)m_maxLenOfQueue * sizeof(Window *)) / 1024 / 1024;
 		for (int i = 0; i < m_scalarField.size(); ++i)
 		{
@@ -579,7 +579,7 @@ namespace Geodesic
 			//#include <iterator>
 			copy(path2.begin() + 1, path2.end(), back_inserter(path));
 			char filename[256];
-			sprintf_s(filename, "%s_%04d.obj", filepath.c_str(), i + 1);
+			sprintf(filename, "%s_%04d.obj", filepath.c_str(), i + 1);
 			model.SavePathToObj(path, filename);
 		}
 	}

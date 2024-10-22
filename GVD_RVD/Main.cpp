@@ -1,5 +1,3 @@
-#pragma comment(lib, "libmpfr-4.lib")
-#pragma comment(lib, "libgmp-10.lib")
 #include "GVD_RVD.hpp"
 #include<vector>
 using namespace std;
@@ -19,10 +17,11 @@ void GvdExample() {
 		}
 	}
 
-	double t = GetTickCount64();
+        auto startTime = std::chrono::high_resolution_clock::now();
 	auto res2 = GetGVD_Bisectors(model, sources);
-	t = GetTickCount64() - t;
-	cerr << "GVD total time: " << t / 1000.0 << "  seconds..." << endl;
+        auto endTime = std::chrono::high_resolution_clock::now();
+    double t = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count() / 1000.0;
+	cerr << "GVD total time: " << t << "  seconds..." << endl;
 	WriteLineObjFile(res2, "gvd_rersult.obj");
 }
 
@@ -40,10 +39,11 @@ void EDBVDExample() {
 			sources.push_back(make_tuple(model.Vert(model.Face(fid)[0]).x, model.Vert(model.Face(fid)[0]).y, model.Vert(model.Face(fid)[0]).z, fid));
 	}
 
-	double t = GetTickCount64();
+        auto startTime = std::chrono::high_resolution_clock::now();
 	auto res2 = GetLRVD_Bisectors(model, sources);
-	t = GetTickCount64() - t;
-	cerr << "EDBVD total time: " << t / 1000.0 << "  seconds..." << endl;
+        auto endTime = std::chrono::high_resolution_clock::now();
+    double t = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count() / 1000.0;
+	cerr << "EDBVD total time: " << t  << "  seconds..." << endl;
 	WriteLineObjFile(res2.first, "EDBVD_rersult.obj");
 
 }
