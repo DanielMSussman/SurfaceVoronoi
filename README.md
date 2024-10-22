@@ -3,6 +3,7 @@ Changes include;
 
 * A cmake-style build (cd build && cmake .. && make)
 * removing dependence on "Windows.h" header (and replacing all "GetTick" timing calls with a dependence on #include <chrono> instead)
+* making a new geodesicVoronoi.cpp file which uses TCLAP and acts as a simple interface to the library
 
 This was tested on Ubuntu 24.04. You'll need  to apt-get install libgmp, libmpfr, and libeigen-dev, and cmake install the CGAL headers.
 
