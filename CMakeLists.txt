@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.19)
 project(surfaceVoronoi)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 find_package (Eigen3 3.3 REQUIRED)
 find_package(CGAL REQUIRED)
 set(CMAKE_BUILD_TYPE "Release")
@@ -33,3 +35,11 @@ target_link_libraries(GVD_RVD PRIVATE Model3D Geodesic gmp mpfr Eigen3::Eigen)
 add_executable(geodesicVoronoi ${CMAKE_SOURCE_DIR}/geodesicVoronoi.cpp)
 target_include_directories(geodesicVoronoi PRIVATE ${MODEL3D_SRC_DIR} ${GEODESIC_SRC_DIR} ${CMAKE_SOURCE_DIR}/inc)
 target_link_libraries(geodesicVoronoi PRIVATE Model3D Geodesic gmp mpfr Eigen3::Eigen)
+
+# configure_file(${CMAKE_CURRENT_BINARY_DIR}/compile_commands.json ${CMAKE_SOURCE_DIR}/compile_commands.json COPYONLY)
+add_custom_command(
+        TARGET geodesicVoronoi POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+                ${CMAKE_CURRENT_BINARY_DIR}/compile_commands.json
+                ${CMAKE_SOURCE_DIR}/compile_commands.json
+)
