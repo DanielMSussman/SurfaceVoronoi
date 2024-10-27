@@ -6,7 +6,7 @@ using namespace std;
 using namespace GVD;
 using namespace TCLAP;
 
-void copmuteGvdExample() {
+void computeGvdExample() {
 }
 
 int main(int argc, char*argv[])
@@ -28,9 +28,10 @@ int main(int argc, char*argv[])
 
 	set<int>sources;
 
+    int nVerts = model.GetNumOfVerts();
 	int ApproSitesNum = 500;
-	for (int i = 0; i < model.GetNumOfVerts(); ++i) {
-		if (i % (model.GetNumOfVerts() / ApproSitesNum) == 0) {
+	for (int i = 0; i < nVerts; ++i) {
+		if (i % (nVerts / ApproSitesNum) == 0) {
 			sources.insert(i);
 		}
 	}
